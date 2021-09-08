@@ -108,30 +108,57 @@ HEAD  | Same as GET method, but no response body.
 PUT  | 	Replace all current representations of the target resource with uploaded content.
 DELETE  | Deletes all current representations of the target resource given by the URL.
 
+`@app.route("/", methods=['GET', 'POST'])`:
+- `@app.route()` Represents app routing and it is used to map the specific URL with the associated function that is intended to perform some task.
+- `"/"` is the default symbol that reprensents a flask app's homepage.
+- `methods=['GET', 'POST'])` allows the home page to have the ability to post data and to get data.
+
+This portion of the code creates the index fuction, which will link the game functions to the homepage.
 ```python
 def index():
     global game
     message = ""
 ```
+- The `index()` function houses the global variable `game` and the empty string `message` variable.
+- `""` represent and empty string. Normally this is used to add an empty line but in this case it is user to represent a replaceable string element. `message = ""` represents that.
 
+The portions of the code below contain the if states and request methods that will reference the functions the `GuessGame()` class by using the `game` variable.
 ```python
 if request.method == 'POST':
     game.increment_goes()
     form = request.form
     user_guess = int(form["guess"])
+```
+- `if request.method == 'POST':` is an if statement that is checking to see if the user has submitted a request to send data.
+- `game.increment_goes()` is referencing the `increment_goes()` function from the `GuessGame()` class to start the attempt counter check.
+- `form = request.form` is linking the post method to a form submition as the data input.
+- `user_guess = int(form["guess"])` is ensuring that the data input or user guess is an integer and that it is entered via the form.
+
+```python    
     if game.comp_num == user_guess:
         message = "Well done. You got it right!"
-    elif game.comp_num == 0:
-        message = "Please enter a number between 1 and 10"
     elif game.comp_num > user_guess:
         message = "Too Low"
     else:
         message = "Too High"
     result = game.check_game_over(user_guess)
+```
+- `if game.comp_num == user_guess:` this if statement is checking to see if the number the user input in the form is equal to the the random number the computer selected. if that statement is true, `message = "Well done. You got it right!"` is triggered. This will display some text saying *Well done. You got it right!*
+- `elif game.comp_num > user_guess:` this if statement is checking to see if the number the user input in the form is lower than the number the computer selected. If that check ends up being true then `message = "Too Low"` is passed. This is a way to guide the user or player to getting right number.
+- `else: message = "Too High"` this statement checks to see if the number the user input in the form is higher than the number the computer selected. If that check ends up being true then `message = "Too High"` is passed. This is a way to guide the user or player to getting right number.
+- `result = game.check_game_over(user_guess)` This references the function `check_game_over()` in the `GuessGame` class.
+
+```python
     if game.check_game_over(user_guess):
        return render_template("game-over.html", message=result)
     return render_template("index.html", message=message)
 ```
+- `if game.check_game_over(user_guess):` this statement is checking to see if any output was produced from the referenced `check_game_over()` function. If an outcome has been produced then `return render_template("game-over.html", message=result)` is called.
+- `return render_template()` produces the html, CSS design for the app page.
+- `"game-over.html"` is the name of the html file being referenced to be displayed in the browser.
+- `message=result` displays the specific message text for the outcome produced.
+
+
 ## Authors
 
 **Xavier Henry**
