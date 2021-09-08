@@ -98,6 +98,15 @@ Setting up the `app.route`s
 ```python
 @app.route("/", methods=['GET', 'POST'])
 ```
+- Flask has different methods to handle http requests. The aim of requests are to allow clients to access resource on the server. The current requests available to flask are:
+
+Request  | Purpose
+------------- | -------------
+GET  | The most common method. A GET message is send, and the server returns data
+POST  | Used to send HTML form data to the server. The data received by the POST method is not cached by the server.
+HEAD  | Same as GET method, but no response body.
+PUT  | 	Replace all current representations of the target resource with uploaded content.
+DELETE  | Deletes all current representations of the target resource given by the URL.
 
 ```python
 def index():
