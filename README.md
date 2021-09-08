@@ -85,6 +85,44 @@ def increment_goes( self ):
   - The last if statement `if self.counter == 3:` handles the maximum counter limit. It is current set to 3 but it can be change by changing the figure in the statement. `return "Maximum Guess limit: 3"` triggers the special limit page when the if statement is fulfiled. 
 
 
+Condesning the functions into gloabal variables:
+```python
+global game
+game = GuessGame()
+```
+- A global variable is a variable that can be accessed from anywhere, from any function. By creating the global variable `game` and making it hold the class `GuessGame()` (this is represented by `game = GuessGame()`) we are essentially making the `GuessGame()` class global and accessible from anywhere.
+- We do this so that we can make setting up out `app.route` functionality easier.
+
+
+Setting up the `app.route`s
+```python
+@app.route("/", methods=['GET', 'POST'])
+```
+
+```python
+def index():
+    global game
+    message = ""
+```
+
+```python
+if request.method == 'POST':
+    game.increment_goes()
+    form = request.form
+    user_guess = int(form["guess"])
+    if game.comp_num == user_guess:
+        message = "Well done. You got it right!"
+    elif game.comp_num == 0:
+        message = "Please enter a number between 1 and 10"
+    elif game.comp_num > user_guess:
+        message = "Too Low"
+    else:
+        message = "Too High"
+    result = game.check_game_over(user_guess)
+    if game.check_game_over(user_guess):
+       return render_template("game-over.html", message=result)
+    return render_template("index.html", message=message)
+```
 ## Authors
 
 **Xavier Henry**
