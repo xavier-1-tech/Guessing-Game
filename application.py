@@ -52,10 +52,5 @@ def index():
     return render_template("index.html", message=message)
 
 
-<<<<<<< HEAD
 if __name__ == '__main__':
     app.run(debug=True)
-=======
-#if __name__ == '__main__':
-    #app.run(debug=True)
->>>>>>> 6de0c02c7f62daf206a05c99e77222d8b3e681df
