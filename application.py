@@ -40,8 +40,6 @@ def index():
         user_guess = int(form["guess"])
         if game.comp_num == user_guess:
             message = "Well done. You got it right!"
-        elif game.comp_num == 0:
-            message = "Please enter a number between 1 and 10"
         elif game.comp_num > user_guess:
             message = "Too Low"
         else:
